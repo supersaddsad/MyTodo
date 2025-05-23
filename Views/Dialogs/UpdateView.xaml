@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="WpfApp1.Views.Dialogs.UpdateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.Views.Dialogs"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="发现新版本" 
+                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                   Margin="24 24 0 0"/>
+
+        <TextBlock Grid.Row="1" 
+                   Text="{Binding UpdateInfo.Version}" 
+                   Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                   Margin="24 8 0 0"/>
+
+        <TextBlock Grid.Row="2" 
+                   Text="{Binding UpdateInfo.ReleaseDate, StringFormat='发布日期: {0:yyyy-MM-dd}'}" 
+                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                   Margin="24 4 0 0"/>
+
+        <TextBlock Grid.Row="3" 
+                   Text="更新内容:" 
+                   Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                   Margin="24 24 0 0"/>
+
+        <TextBlock Grid.Row="4" 
+                   Text="{Binding UpdateInfo.ReleaseNotes}" 
+                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                   TextWrapping="Wrap"
+                   Margin="24 8 24 0"/>
+
+        <StackPanel Grid.Row="5" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0 24 24 24">
+            <Button Content="取消" 
+                    Style="{StaticResource {x:Type Button}}"
+                    Command="{Binding CancelCommand}"
+                    Margin="0 0 8 0"/>
+
+            <Button Content="{Binding StatusText}" 
+                    Style="{StaticResource {x:Type Button}}"
+                    Command="{Binding DownloadCommand}"
+                    IsEnabled="{Binding !IsDownloading}"
+                    Background="{StaticResource  MaterialDesignDarkSeparatorBackground}"
+                    Foreground="White"/>
+        </StackPanel>
+
+        <ProgressBar Grid.Row="6" 
+                        Value="{Binding DownloadProgress}"
+                        Maximum="100"
+                        IsIndeterminate="{Binding IsDownloading}"
+                        Margin="24 0 24 24"
+                        Visibility="{Binding IsDownloading}"/>
+    </Grid>
+</UserControl>

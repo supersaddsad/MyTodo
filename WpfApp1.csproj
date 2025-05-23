@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ViewModels\新文件夹1\**" />
+    <EmbeddedResource Remove="ViewModels\新文件夹1\**" />
+    <None Remove="ViewModels\新文件夹1\**" />
+    <Page Remove="ViewModels\新文件夹1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Head.png" />
+    <None Remove="Images\ok.png" />
+    <None Remove="Images\爱心.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.2-ci976" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Prism.Core" Version="9.0.537" />
+    <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
+    <PackageReference Include="Prism.Wpf" Version="9.0.537" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Head.png" />
+    <Resource Include="Images\ok.png" />
+    <Resource Include="Images\爱心.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyToDo.Shared\MyToDo.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
