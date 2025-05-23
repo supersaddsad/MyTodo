@@ -1,0 +1,214 @@
+﻿<Window
+    x:Class="WpfApp1.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+
+    xmlns:ext="clr-namespace:WpfApp1.Extensions"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:WpfApp1"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mdconv="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/" 
+    xmlns:viewModels="clr-namespace:WpfApp1.ViewModels"
+    Title="ToDo App"
+    Width="1280"
+    Height="768"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    AllowsTransparency="True"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    
+    <Window.Resources>
+       
+        <Style x:Key="WindowButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#22FFFFFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+
+    <md:DialogHost DialogTheme="Inherit" x:Name="DialogHost" Identifier="Root">
+        <md:DrawerHost x:Name="drawerHost" IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <md:DrawerHost.LeftDrawerContent>
+                <DockPanel MinWidth="280" Background="{DynamicResource MaterialDesignPaper}">
+                    <!-- 用户信息区域 -->
+                    <Grid DockPanel.Dock="Top" Margin="0 32 0 16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Border Width="80" Height="80"
+                            HorizontalAlignment="Center"
+                                CornerRadius="40"
+                                Effect="{StaticResource MaterialDesignElevationShadow2}">
+                            <Border.Background>
+                                <ImageBrush ImageSource="../Images/Head.png" Stretch="UniformToFill"/>
+                            </Border.Background>
+                        </Border>
+
+                        <TextBlock Grid.Row="1"
+                                 Text="Welcome Back"
+                                 Margin="0 16 0 0"
+                                 Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                 HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- 导航菜单 -->
+                    <ListBox x:Name="menuBar"
+                            Margin="0 16"
+                        ItemContainerStyle="{StaticResource MyListBoxItemStyle}"
+                            ItemsSource="{Binding MenuBars}"
+                            BorderThickness="0"
+                            Background="Transparent">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding NavigateCommand}" 
+                                                     CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="48">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="48"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <md:PackIcon Kind="{Binding Icon}"
+                                               Width="24" Height="24"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1"
+                                             Text="{Binding Title}"
+                                             VerticalAlignment="Center"
+                                             Style="{StaticResource MaterialDesignBody1TextBlock}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </md:DrawerHost.LeftDrawerContent>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- 通知栏 -->
+                <md:Snackbar x:Name="Snackbar"
+                            Panel.ZIndex="1"
+                            MessageQueue="{md:MessageQueue}"/>
+
+                <!-- 顶部工具栏 -->
+                <md:ColorZone x:Name="ColorZone"
+                             Mode="PrimaryMid"
+                             Effect="{StaticResource MaterialDesignElevationShadow4}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 左侧工具栏 -->
+                        <StackPanel Orientation="Horizontal" Margin="16 0">
+                            <ToggleButton x:Name="MenuToggleButton"
+                                        Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                                        AutomationProperties.Name="Menu"
+                                        Width="32" Height="32"/>
+
+                            <Button Margin="24 0"
+                                    Style="{StaticResource MaterialDesignToolButton}"
+                                    Command="{Binding GoBackCommand}"
+                                    ToolTip="返回">
+                                <md:PackIcon Kind="ArrowLeft" Width="24" Height="24"/>
+                            </Button>
+
+                            <Button Margin="0 0 24 0"
+                                    Style="{StaticResource MaterialDesignToolButton}"
+                                    Command="{Binding GoForwardCommand}"
+                                    ToolTip="前进">
+                                <md:PackIcon Kind="ArrowRight" Width="24" Height="24"/>
+                            </Button>
+
+                            <TextBlock Text="ToDo App"
+                                     Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                     VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- 右侧工具栏 -->
+                        <StackPanel Grid.Column="1" 
+                                  Orientation="Horizontal"
+                                  Margin="0 0 8 0">
+                            <!-- 用户菜单 -->
+                            <md:PopupBox Margin="0 0 8 0">
+                                <md:PopupBox.ToggleContent>
+                                    <Border Width="32" Height="32"
+                                            CornerRadius="16"
+                                            Effect="{StaticResource MaterialDesignElevationShadow1}">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="../Images/Head.png" 
+                                                      Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+                                </md:PopupBox.ToggleContent>
+                                <StackPanel>
+                                    <Button Content="个人信息"
+                                            Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    <Button Content="系统设置"
+                                            Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    <Separator/>
+                                    <Button Content="退出登录"
+                                            Style="{StaticResource MaterialDesignFlatButton}"/>
+                                </StackPanel>
+                            </md:PopupBox>
+
+                            <!-- 窗口控制按钮 -->
+                            <Button x:Name="btnMin"
+                                    Content="─"
+                                    Style="{StaticResource WindowButtonStyle}"/>
+                            <Button x:Name="btnMax"
+                                    Content="☐"
+                                    Style="{StaticResource WindowButtonStyle}"/>
+                            <Button x:Name="btnClose"
+                                    Content="✕">
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource WindowButtonStyle}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#E81123"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </md:ColorZone>
+
+                <!-- 主内容区域 -->
+                <ContentControl Grid.Row="1" 
+                              prism:RegionManager.RegionName="{x:Static ext:PrismManager.MainViewRegionName}"/>
+            </Grid>
+        </md:DrawerHost>
+    </md:DialogHost>
+</Window>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1.csproj", "{EBB49C8E-B517-40CA-B94D-FE9C6620E682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToDoApi", "..\MyToDoApi\MyToDoApi.csproj", "{4B9C8121-3D6B-4FE7-83FD-45DE58323955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToDo.Shared", "..\MyToDo.Shared\MyToDo.Shared.csproj", "{6D50FC6F-EF73-4EE3-A154-D9F33A2F3B6E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBB49C8E-B517-40CA-B94D-FE9C6620E682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB49C8E-B517-40CA-B94D-FE9C6620E682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB49C8E-B517-40CA-B94D-FE9C6620E682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB49C8E-B517-40CA-B94D-FE9C6620E682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B9C8121-3D6B-4FE7-83FD-45DE58323955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B9C8121-3D6B-4FE7-83FD-45DE58323955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B9C8121-3D6B-4FE7-83FD-45DE58323955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B9C8121-3D6B-4FE7-83FD-45DE58323955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D50FC6F-EF73-4EE3-A154-D9F33A2F3B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D50FC6F-EF73-4EE3-A154-D9F33A2F3B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D50FC6F-EF73-4EE3-A154-D9F33A2F3B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D50FC6F-EF73-4EE3-A154-D9F33A2F3B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
