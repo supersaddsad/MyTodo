@@ -92,6 +92,7 @@ namespace WpfApp1.Service
             catch (JsonException ex)
             {
                 return ApiResponse.Fail($"JSON Error: {ex.Message}");
+            
             }
         }
 
@@ -132,8 +133,11 @@ namespace WpfApp1.Service
                         }
                     }
                 }
-
+                
+             
                 var response = await _client.ExecuteAsync(request);
+               
+            
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -151,4 +155,5 @@ namespace WpfApp1.Service
             }
         }
     }
+
 }

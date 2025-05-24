@@ -10,7 +10,7 @@ namespace WpfApp1.Events
     public class UpdateModel
     {
         public bool IsOpen { get; set; }
-
+      
         public double Progress { get; set; }
         public string StatusText { get; set; }
         public string DetailsText { get; set; }
